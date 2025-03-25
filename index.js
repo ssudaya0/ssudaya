@@ -46,8 +46,18 @@ const parser = new Parser({
   text += `</ul>`;
 
   // README.md 파일 생성
-  writeFileSync("README.md", text, "utf8", (e) => {
-    console.log(e);
-  });
-  console.log("업데이트 완료");
+  const fs = require("fs");
+  const newContent = generateReadmeContent(); // 실제 README 내용 생성 함수
+
+  const filePath = "README.md";
+  const oldContent = fs.existsSync(filePath)
+    ? fs.readFileSync(filePath, "utf8")
+    : "";
+
+  if (oldContent !== newContent) {
+    fs.writeFileSync(filePath, newContent);
+    console.log("✅ README.md updated.");
+  } else {
+    console.log("ℹ️ No changes to README.md");
+  }
 })();
