@@ -30,13 +30,13 @@ jobs:
       - name: Update README
         run: npm start
 
+      - name: Diff 확인
+        run: git diff
+
       - name: Check if there are any changes
         id: verify_diff
         run: |
           git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
-
-      - name: Diff 확인
-        run: git diff
 
       - name: Commit README
         if: steps.verify_diff.outputs.changed == 'true'
